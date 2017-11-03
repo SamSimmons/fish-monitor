@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^tank/(?P<pk>[0-9]+)/$', views.TankDetail.as_view()),
     url(r'^tank/(?P<pk>[0-9]+)/water/$', views.WaterChange.as_view()),
     url(r'^^tank/(?P<pk>[0-9]+)/temp/$', views.TempReading.as_view()),
+    url(r'^^tank/(?P<pk>[0-9]+)/ph/$', views.PHReading.as_view()),
     url(r'^api-token-auth/', obtain_auth_token),
 ]

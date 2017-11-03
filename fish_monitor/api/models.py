@@ -9,12 +9,12 @@ class Tank(models.Model):
     last_temp = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
     temp_min = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
     temp_max = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
-    last_ph = models.CharField(max_length=10, default = '0')
-    ph_min = models.CharField(max_length=10, default = '0')
-    ph_max = models.CharField(max_length=10, default = '0')
-    last_ammonia = models.CharField(max_length=10, null = True)
-    ammonia_min = models.CharField(max_length=10, default = '0')
-    ammonia_max = models.CharField(max_length=10, default = '0')
+    last_ph = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
+    ph_min = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
+    ph_max = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
+    last_ammonia = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
+    ammonia_min = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
+    ammonia_max = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
     light_value = models.IntegerField(null = True)
 
 class WaterChangeHistory(models.Model):
@@ -24,4 +24,9 @@ class WaterChangeHistory(models.Model):
 class TempHistory(models.Model):
     tank_id = models.IntegerField()
     modified_date = models.DateTimeField(auto_now=True)
-    temperature = models.CharField(max_length=10)
+    temperature = models.DecimalField(max_digits=5, decimal_places=2)
+
+class PHHistory(models.Model):
+    tank_id = models.IntegerField()
+    modified_date = models.DateTimeField(auto_now=True)
+    ph = models.DecimalField(max_digits=5, decimal_places=2)

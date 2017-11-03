@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.fields import CurrentUserDefault
-from .models import Tank, WaterChangeHistory, TempHistory
+from .models import Tank, WaterChangeHistory, TempHistory, PHHistory
 
 class TankSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,3 +31,8 @@ class TempHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = TempHistory
         fields = ('tank_id', 'modified_date', 'temperature')
+
+class PHHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PHHistory
+        fields = ('tank_id', 'modified_date', 'ph')
