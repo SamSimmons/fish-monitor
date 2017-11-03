@@ -3,7 +3,7 @@ from dateutil import parser
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Tank
+from .models import Tank, TempHistory
 from .serializers import TankSerializer, WaterChangeHistorySerializer, TempHistorySerializer, PHHistorySerializer
 from .permissions import IsAdminOrReadOnly
 
@@ -71,6 +71,13 @@ class TempReading(APIView):
         if temp[-1] == 'F':
             temp_value = ((temp_value - 32) * 5) / 9
         return temp_value
+
+    def get(self, request, pk, format=None):
+        tank = self.get_object(pk)
+        tank_id = tank.id
+        temps = TempHistory.objects.filter(tank_id=tank_id)
+        serializer = TempHistorySerializer(temps, many=True)
+        return Response(serializer.data)
     def post(self, request, pk, format=None):
         tank = self.get_object(pk)
         if tank.owner.id != request.user.id:
