@@ -11,6 +11,7 @@ class TempReading(APIView):
             return Tank.objects.get(pk=pk)
         except Tank.DoesNotExist:
             raise Http404
+            
     def validate_temp(self, temp):
         if temp[-1] != 'C' and temp[-1] != 'F':
             return None
@@ -26,6 +27,7 @@ class TempReading(APIView):
         temps = TempHistory.objects.filter(tank_id=tank_id)
         serializer = TempHistorySerializer(temps, many=True)
         return Response(serializer.data)
+
     def post(self, request, pk, format=None):
         tank = self.get_object(pk)
         if tank.owner.id != request.user.id:
