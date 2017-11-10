@@ -6,12 +6,12 @@
         <div class="subtitle" v-on:click="showRegister">or register</div>
       </div>
       <div class="field">
-        <label for="email">Email:</label>
-        <input type="text" name="email" defaultValue="" v-model="email">
+        <label for="username">Username:</label>
+        <input type="text" name="username" defaultValue="" v-model="username">
       </div>
       <div class="field">
         <label for="password">Password:</label>
-        <input type="password" name="password" defaultValue="" v-model="password">
+        <input type="password" name="password" defaultValue="" v-model="password" v-on:keyup.enter="submitLogin">
       </div>
       <button class="btn login__submit" v-on:click="submitLogin">GO</button>
       <div class="login__forgot">Forgot your password?</div>
@@ -20,6 +20,10 @@
       <div class="title-bar">
         <div class="title">REGISTER</div>
         <div class="subtitle" v-on:click="showLogin">or login</div>
+      </div>
+      <div class="field">
+        <label for="username">Username:</label>
+        <input type="text" name="username" defaultValue="" v-model="username">
       </div>
       <div class="field">
         <label for="email">Email:</label>
@@ -44,6 +48,7 @@ export default {
   data () {
     return {
       isRegistering: false,
+      username: '',
       email: '',
       password: '',
       repeatPassword: ''
@@ -54,12 +59,14 @@ export default {
       this.isRegistering = false
     },
     showRegister () {
+      this.username = ''
+      this.password = ''
       this.isRegistering = true
     },
     submitLogin () {
-      const email = this.email
+      const username = this.username
       const password = this.password
-      this.$emit('submit', { email, password })
+      this.$emit('submit', { username, password })
     }
 
   }

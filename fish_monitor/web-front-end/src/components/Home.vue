@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     sendLogin (creds) {
-      console.log('creds', creds)
       Auth.login(creds, (err, response) => {
         if (err) {
           console.log('err', err)

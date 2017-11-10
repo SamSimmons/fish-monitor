@@ -2,18 +2,19 @@ import axios from 'axios'
 
 export default {
   login (creds, cb) {
-    const { email, password } = creds
+    const { username, password } = creds
     if (localStorage.token) {
       if (cb) { cb(null, true) }
       this.onChange(true)
       return
     }
     axios.post('http://localhost:8000/api-token-auth/', {
-      username: email,
+      username,
       password
     })
     .then((res) => {
-      console.log('hey got a response', res)
+      localStorage.token = res.data.token
+      this.onChange(true)
     })
     .catch(cb)
   },
