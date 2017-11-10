@@ -6,14 +6,14 @@
         <div class="subtitle" v-on:click="showRegister">or register</div>
       </div>
       <div class="field">
-        <label for="username">Username:</label>
-        <input type="text" name="username" defaultValue="">
+        <label for="email">Email:</label>
+        <input type="text" name="email" defaultValue="" v-model="email">
       </div>
       <div class="field">
         <label for="password">Password:</label>
-        <input type="text" name="password" defaultValue="">
+        <input type="password" name="password" defaultValue="" v-model="password">
       </div>
-      <button class="btn login__submit">GO</button>
+      <button class="btn login__submit" v-on:click="submitLogin">GO</button>
       <div class="login__forgot">Forgot your password?</div>
     </div>
     <div class="login__container login__container--register" v-show="isRegistering">
@@ -22,16 +22,16 @@
         <div class="subtitle" v-on:click="showLogin">or login</div>
       </div>
       <div class="field">
-        <label for="username">Username:</label>
-        <input type="text" name="username" defaultValue="">
+        <label for="email">Email:</label>
+        <input type="text" name="email" defaultValue="" v-model="email">
       </div>
       <div class="field">
         <label for="password">Password:</label>
-        <input type="password" name="password" defaultValue="">
+        <input type="password" name="password" defaultValue="" v-model="password">
       </div>
       <div class="field">
         <label for="repeat-password">Repeat Password:</label>
-        <input type="password" name="repeat-password" defaultValue="">
+        <input type="password" name="repeat-password" defaultValue="" v-model="repeatPassword">
       </div>
       <button class="btn login__submit">SIGN UP</button>
     </div>
@@ -43,7 +43,10 @@
 export default {
   data () {
     return {
-      isRegistering: false
+      isRegistering: false,
+      email: '',
+      password: '',
+      repeatPassword: ''
     }
   },
   methods: {
@@ -52,7 +55,13 @@ export default {
     },
     showRegister () {
       this.isRegistering = true
+    },
+    submitLogin () {
+      const email = this.email
+      const password = this.password
+      this.$emit('submit', { email, password })
     }
+
   }
 }
 </script>
@@ -137,6 +146,7 @@ export default {
 .login__container--register input {
   background: var(--primary);
   border-bottom: 1px solid var(--white);
+  color: var(--white);
 }
 
 .login__container--register .btn {
