@@ -47,6 +47,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'rest_framework',
     "rest_framework.authtoken",
+    "corsheaders",
 )
 
 LOCAL_APPS = (
@@ -56,6 +57,8 @@ LOCAL_APPS = (
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -155,3 +158,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+CORS_ORIGIN_WHITELIST = (
+    "localhost:8080",
+)
