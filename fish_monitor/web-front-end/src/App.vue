@@ -25,12 +25,9 @@ export default {
   --dark: #4F4F4F;
   --background: linear-gradient(30deg, #3C4069, #683F67);
   --sans: 'Lato', sans-serif;
-  align-items: center;
   background: var(--background);
   color: var(--dark);
-  display: flex;
   font-family: var(--sans);
-  justify-content: center;
   min-height: 100vh;
 }
 

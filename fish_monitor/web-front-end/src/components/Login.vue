@@ -40,6 +40,7 @@
       <div v-show="error" class="error-container">{{errorMessage}}</div>
       <button class="btn login__submit" v-on:click="submitRegistration">SIGN UP</button>
     </div>
+    <div class="btn demo-link" v-show="!loggedIn">view demo</div>
   </div>
 </template>
 
@@ -90,10 +91,15 @@ export default {
 <style lang="css">
 
 .login {
-  box-shadow: 3px 4px 3px 3px rgba(30, 30, 30, .2);
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .login__container {
+  box-shadow: 3px 4px 3px 3px rgba(30, 30, 30, .2);
   background: var(--white);
   display: inline-flex;
   flex-flow: row wrap;
@@ -136,7 +142,6 @@ export default {
 .login__container {
   display: flex;
   flex-flow: column;
-  flex: 1 1 100%;
 }
 
 .title-bar {
@@ -174,5 +179,7 @@ export default {
     color: var(--white);
     border-color: var(--white);
 }
+
+.demo-link { margin-top: 30px; }
 
 </style>

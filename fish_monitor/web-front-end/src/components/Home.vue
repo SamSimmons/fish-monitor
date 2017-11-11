@@ -5,20 +5,23 @@
       @login="sendLogin"
       @register="sendRegistration"
     />
-    <div v-show="loggedIn" >
+    <!--move nav into own component as soon as there's stuff to put in there  -->
+    <nav v-show="loggedIn">
       <button class="btn" v-on:click="logOut">Log out</button>
-    </div>
-    <div class="btn demo-link">view demo</div>
+    </nav>
+    <dashboard v-show="loggedIn" />
   </div>
 </template>
 
 <script>
 import Login from './Login'
 import Auth from './Auth'
+import Dashboard from './Dashboard'
 
 export default {
   components: {
-    Login
+    Login,
+    Dashboard
   },
   data () {
     return {
@@ -52,14 +55,10 @@ export default {
 </script>
 
 <style lang="css">
-.home {
+nav {
   display: flex;
-  flex-flow: column;
+  justify-content: flex-end;
 }
 
-
-.demo-link {
-  margin-top: 50px;
-  padding: 10px;
-}
+nav .btn { margin: 15px; }
 </style>
