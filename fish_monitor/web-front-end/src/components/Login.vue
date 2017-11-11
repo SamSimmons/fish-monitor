@@ -40,7 +40,7 @@
       <div v-show="error" class="error-container">{{errorMessage}}</div>
       <button class="btn login__submit" v-on:click="submitRegistration">SIGN UP</button>
     </div>
-    <div class="btn demo-link" v-show="!loggedIn">view demo</div>
+    <div class="btn demo-link">view demo</div>
   </div>
 </template>
 
@@ -137,6 +137,7 @@ export default {
 .field input {
   border: 0;
   border-bottom: 1px solid var(--dark);
+  background: var(--white);
 }
 
 .login__container {

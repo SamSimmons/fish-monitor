@@ -11,6 +11,12 @@ class TankList(generics.ListCreateAPIView):
     serializer_class = TankSerializer
     permission_classes = (IsAdminOrReadOnly, )
 
+    def get_tanks(self, id):
+        try:
+            return Tank.objects.filter(owner=id)
+        except Tank.DoesNotExist:
+            raise Http404
+
     def post(self, request, format=None):
         data = request.data
         data['owner'] = request.user.id
@@ -19,6 +25,13 @@ class TankList(generics.ListCreateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, format=None):
+        owner = request.user.id
+        data = self.get_tanks(owner)
+        serializer = TankSerializer(data, many=True)
+        return Response(serializer.data)
+
 
 class TankDetail(APIView):
     def get_object(self, pk):
