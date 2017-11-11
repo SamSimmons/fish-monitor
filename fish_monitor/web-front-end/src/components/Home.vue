@@ -1,6 +1,10 @@
 <template lang="html">
   <div class="home">
-    <login v-show="!loggedIn" @submit="sendLogin" />
+    <login
+      v-show="!loggedIn"
+      @login="sendLogin"
+      @register="sendRegistration"
+    />
     <div v-show="loggedIn" >
       <button class="btn" v-on:click="logOut">Log out</button>
     </div>
@@ -23,11 +27,16 @@ export default {
   },
   methods: {
     sendLogin (creds) {
-      Auth.login(creds, (err, response) => {
-        if (err) {
-          console.log('err', err)
-        }
-        console.log('res', response)
+      Auth.login(creds, (err, res) => {
+        if (err) { console.log('err', err) }
+        console.log('res', res)
+      })
+    },
+    sendRegistration (creds) {
+      console.log('creds', creds)
+      Auth.register(creds, (err, res) => {
+        if (err) { console.log('err', err) }
+        console.log('res', res)
       })
     },
     logOut () {

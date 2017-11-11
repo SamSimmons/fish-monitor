@@ -19,6 +19,19 @@ export default {
     .catch(cb)
   },
 
+  register (creds, cb) {
+    const { username, email, password } = creds
+    axios.post('http://localhost:8000/register/', {
+      username,
+      email,
+      password
+    })
+    .then((res) => {
+      this.login(creds)
+    })
+    .catch(cb)
+  },
+
   getToken () {
     return localStorage.token
   },

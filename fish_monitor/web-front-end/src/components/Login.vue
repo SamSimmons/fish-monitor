@@ -35,11 +35,11 @@
       </div>
       <div class="field">
         <label for="repeat-password">Repeat Password:</label>
-        <input type="password" name="repeat-password" defaultValue="" v-model="repeatPassword">
+        <input type="password" name="repeat-password" defaultValue="" v-model="repeatPassword" v-on:keyup.enter="submitRegistration">
       </div>
-      <button class="btn login__submit">SIGN UP</button>
+      <div v-show="error" class="error-container">{{errorMessage}}</div>
+      <button class="btn login__submit" v-on:click="submitRegistration">SIGN UP</button>
     </div>
-
   </div>
 </template>
 
@@ -51,7 +51,9 @@ export default {
       username: '',
       email: '',
       password: '',
-      repeatPassword: ''
+      repeatPassword: '',
+      error: false,
+      errorMessage: ''
     }
   },
   methods: {
@@ -66,7 +68,19 @@ export default {
     submitLogin () {
       const username = this.username
       const password = this.password
-      this.$emit('submit', { username, password })
+      this.$emit('login', { username, password })
+    },
+    submitRegistration () {
+      if (this.password !== this.repeatPassword) {
+        this.error = true
+        this.errorMessage = 'Passwords must match'
+        return
+      }
+      this.error = false
+      const username = this.username
+      const email = this.email
+      const password = this.password
+      this.$emit('register', { username, email, password })
     }
 
   }
