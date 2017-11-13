@@ -138,6 +138,7 @@ export default {
   border: 0;
   border-bottom: 1px solid var(--dark);
   background: var(--white);
+  color: var(--dark);
 }
 
 .login__container {

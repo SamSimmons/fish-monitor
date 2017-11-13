@@ -33,6 +33,7 @@ class TankSerializer(serializers.ModelSerializer):
         fields = (
             'owner',
             'name',
+            'size',
             'last_water_change',
             'water_change_freq',
             'last_temp',
@@ -45,6 +46,7 @@ class TankSerializer(serializers.ModelSerializer):
             'ammonia_min',
             'ammonia_max',
             'light_value',
+            'updated',
         )
 
 class WaterChangeHistorySerializer(serializers.ModelSerializer):

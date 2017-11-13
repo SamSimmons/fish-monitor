@@ -1,19 +1,58 @@
 <template>
   <div id="app" class="app">
-    <home />
+    <div class="home">
+      <login
+        v-if="!loggedIn"
+        @login="sendLogin"
+        @register="sendRegistration"
+      />
+      <!--move nav into own component as soon as there's stuff to put in there  -->
+      <nav v-show="loggedIn">
+        <button class="btn" v-on:click="logOut">Log out</button>
+      </nav>
+      <tank-list v-if="loggedIn" />
+    </div>
   </div>
 </template>
 
 <script>
-
-import Home from './components/Home'
+import Login from './components/Login'
+import Auth from './components/Auth'
+import TankList from './components/List'
 
 export default {
   name: 'app',
   components: {
-    Home
+    Login,
+    TankList
+  },
+  data () {
+    return {
+      loggedIn: Auth.loggedIn()
+    }
   },
   methods: {
+    sendLogin (creds) {
+      Auth.login(creds, (err, res) => {
+        if (err) { console.log('err', err) }
+        console.log('res', res)
+      })
+    },
+    sendRegistration (creds) {
+      console.log('creds', creds)
+      Auth.register(creds, (err, res) => {
+        if (err) { console.log('err', err) }
+        console.log('res', res)
+      })
+    },
+    logOut () {
+      Auth.logout()
+    }
+  },
+  created () {
+    Auth.onChange = (loggedIn) => {
+      this.loggedIn = loggedIn
+    }
   }
 }
 </script>
@@ -22,7 +61,7 @@ export default {
 .app {
   --primary: #50C8BF;
   --white: #fff;
-  --dark: #4F4F4F;
+  --dark: #606060;
   --background: linear-gradient(30deg, #3C4069, #683F67);
   --sans: 'Lato', sans-serif;
   background: var(--background);
@@ -45,4 +84,12 @@ body {
   padding: 10px;
   text-transform: uppercase;
 }
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav .btn { margin: 15px; }
+
 </style>
