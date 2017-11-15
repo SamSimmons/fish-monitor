@@ -85,6 +85,11 @@ body {
   text-transform: uppercase;
 }
 
+.btn--white {
+  border: 2px solid var(--white);
+  color: var(--white);
+}
+
 nav {
   display: flex;
   justify-content: flex-end;

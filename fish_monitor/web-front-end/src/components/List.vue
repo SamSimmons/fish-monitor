@@ -49,7 +49,7 @@ export default {
       .then((res) => {
         this.tanks = map(res.data, (tank) => {
           tank.timestamp = moment(tank.updated).format('dddd MMMM Do YYYY')
-          tank.lastChange = moment(tank.last_water_change).diff(moment(), 'days')
+          tank.lastChange = Math.abs(moment(tank.last_water_change).diff(moment(), 'days'))
           return tank
         })
         this.loading = false

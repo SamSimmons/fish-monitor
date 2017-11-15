@@ -19,7 +19,8 @@
     "sweetalert": "^2.0.8",
     "vue": "^2.5.2",
     "vue-awesome": "^2.3.4",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuejs-datepicker": "^0.9.20"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
