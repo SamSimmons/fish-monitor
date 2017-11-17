@@ -42,7 +42,15 @@ class TankDetail(APIView):
             return Tank.objects.get(pk=pk)
         except Tank.DoesNotExist:
             raise Http404
+
     def get(self, request, pk, format=None):
         tank = self.get_object(pk)
         serializer = TankSerializer(tank)
         return Response(serializer.data)
+
+    def delete(self, request, pk, format=None):
+        tank = self.get_object(pk)
+        if tank.id == request.user.id:
+            tank.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)

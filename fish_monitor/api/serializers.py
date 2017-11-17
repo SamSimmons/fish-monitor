@@ -28,9 +28,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TankSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
     class Meta:
         model = Tank
         fields = (
+            'id',
             'owner',
             'name',
             'size',
