@@ -28,7 +28,7 @@ class PHReading(APIView):
         data = { 'last_ph': new_ph }
         tank_serializer = TankSerializer(tank, data=data, partial=True)
 
-        new_history = { 'tank_id': tank.id, 'ph': new_ph }
+        new_history = { 'tank': tank.id, 'ph': new_ph }
         history_serializer = PHHistorySerializer(data=new_history)
 
         if tank_serializer.is_valid() and history_serializer.is_valid():

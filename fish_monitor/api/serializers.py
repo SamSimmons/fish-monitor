@@ -52,14 +52,14 @@ class TankSerializer(serializers.ModelSerializer):
 class WaterChangeHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = WaterChangeHistory
-        fields = ('tank_id', 'modified_date')
+        fields = ('tank', 'modified_date')
 
 class TempHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = TempHistory
-        fields = ('tank_id', 'modified_date', 'temperature')
+        fields = ('tank', 'modified_date', 'temperature')
 
 class PHHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PHHistory
-        fields = ('tank_id', 'modified_date', 'ph')
+        fields = ('tank', 'modified_date', 'ph')

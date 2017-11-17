@@ -11,7 +11,7 @@ class TempReading(APIView):
             return Tank.objects.get(pk=pk)
         except Tank.DoesNotExist:
             raise Http404
-            
+
     def validate_temp(self, temp):
         if temp[-1] != 'C' and temp[-1] != 'F':
             return None
@@ -40,7 +40,7 @@ class TempReading(APIView):
         data = { 'last_temp': new_temp }
         tank_serializer = TankSerializer(tank, data=data, partial=True)
 
-        new_history = { 'tank_id': tank.id, 'temperature': new_temp }
+        new_history = { 'tank': tank.id, 'temperature': new_temp }
         history_serializer = TempHistorySerializer(data=new_history)
 
         if tank_serializer.is_valid() and history_serializer.is_valid():

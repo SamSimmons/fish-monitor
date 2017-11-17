@@ -14,6 +14,7 @@ class WaterChange(APIView):
             raise Http404
     def post(self, request, pk, format=None):
         tank = self.get_object(pk)
+        print("--->", tank.owner.id, request.user.id)
         if tank.owner.id != request.user.id:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -21,12 +22,11 @@ class WaterChange(APIView):
         data = { 'last_water_change': new_date }
         tank_serializer = TankSerializer(tank, data=data, partial=True)
 
-        new_history = { 'tank_id': tank.id, 'modified_date': new_date }
+        new_history = { 'tank': tank.id, 'modified_date': new_date }
         history_serializer = WaterChangeHistorySerializer(data=new_history)
         if tank_serializer.is_valid() and history_serializer.is_valid():
             # everthing is valid, need to save the change date to the table and also add an entry to the change history
             tank_serializer.save()
             history_serializer.save()
             return Response(tank_serializer.data)
-
         return Response(status=status.HTTP_400_BAD_REQUEST)

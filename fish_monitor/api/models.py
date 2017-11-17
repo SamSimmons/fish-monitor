@@ -20,15 +20,15 @@ class Tank(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 class WaterChangeHistory(models.Model):
-    tank_id = models.IntegerField()
+    tank = models.ForeignKey(Tank, on_delete=models.CASCADE)
     modified_date = models.DateTimeField()
 
 class TempHistory(models.Model):
-    tank_id = models.IntegerField()
+    tank = models.ForeignKey(Tank, on_delete=models.CASCADE)
     modified_date = models.DateTimeField(auto_now=True)
     temperature = models.DecimalField(max_digits=5, decimal_places=2)
 
 class PHHistory(models.Model):
-    tank_id = models.IntegerField()
+    tank = models.ForeignKey(Tank, on_delete=models.CASCADE)
     modified_date = models.DateTimeField(auto_now=True)
     ph = models.DecimalField(max_digits=5, decimal_places=2)
