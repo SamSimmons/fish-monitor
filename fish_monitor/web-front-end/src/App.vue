@@ -62,6 +62,7 @@ export default {
   --primary: #50C8BF;
   --white: #fff;
   --dark: #606060;
+  --error: rgb(255, 234, 143);
   --background: linear-gradient(30deg, #3C4069, #683F67);
   --sans: 'Lato', sans-serif;
   background: var(--background);

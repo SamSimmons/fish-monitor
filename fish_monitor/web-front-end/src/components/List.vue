@@ -9,7 +9,7 @@
         v-bind:key="tank.name"
         v-bind:tank="tank"
       ></list-item>
-      <create-tank></create-tank>
+      <create-tank @update-list="fetchData"></create-tank>
     </div>
   </div>
 </template>

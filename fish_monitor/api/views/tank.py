@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from ..models import Tank
 from ..serializers import TankSerializer
 from ..permissions import IsAdminOrReadOnly
+from datetime import datetime
 
 class TankList(generics.ListCreateAPIView):
     queryset = Tank.objects.all()
@@ -20,6 +21,8 @@ class TankList(generics.ListCreateAPIView):
     def post(self, request, format=None):
         data = request.data
         data['owner'] = request.user.id
+        print(request.data)
+        data['last_water_change'] = datetime.fromtimestamp(float(data['last_water_change']) / 1000.0)
         serializer = TankSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
