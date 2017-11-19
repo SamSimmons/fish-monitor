@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="tank-list__item">
-    <div class="name">{{ tank.name }}</div>
+    <router-link :to="{ name: 'Tank', params: { id: tank.id } }">
+      <div class="name">{{ tank.name }}</div>
+    </router-link>
     <div class="timestamp">Last updated: {{ tank.timestamp }}</div>
     <div class="stats">
       <div class="stat">
