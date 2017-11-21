@@ -2,10 +2,11 @@ from django.http import Http404
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..models import Tank
-from ..serializers import TankSerializer
+from ..models import Tank, WaterChangeHistory
+from ..serializers import TankSerializer, WaterChangeHistorySerializer
 from ..permissions import IsAdminOrReadOnly
-from datetime import datetime
+from datetime import datetime, timedelta
+import json
 
 class TankList(generics.ListCreateAPIView):
     queryset = Tank.objects.all()
@@ -43,10 +44,24 @@ class TankDetail(APIView):
         except Tank.DoesNotExist:
             raise Http404
 
+    def get_water_changes(self, id):
+        cutoff = datetime.now() - timedelta(days = 14)
+        return WaterChangeHistory.objects.filter(tank=id).filter(modified_date__gte = cutoff)
+
+    def merge_details(self, tank, changes):
+        return { 'tank': tank, 'changes': changes }
+
     def get(self, request, pk, format=None):
         tank = self.get_object(pk)
-        serializer = TankSerializer(tank)
-        return Response(serializer.data)
+        if tank.id == request.user.id:
+            serializer = TankSerializer(tank)
+
+            changes = self.get_water_changes(tank.id)
+            changes_serializer = WaterChangeHistorySerializer(changes, many = True)
+
+            data = self.merge_details(serializer.data, changes_serializer.data)
+            return Response(data)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def delete(self, request, pk, format=None):
         tank = self.get_object(pk)
