@@ -14,6 +14,7 @@ export default {
 <style>
 .app {
   --primary: #50C8BF;
+  --primary-border: #50C8BF33;
   --white: #fff;
   --dark: #606060;
   --error: rgb(255, 234, 143);
