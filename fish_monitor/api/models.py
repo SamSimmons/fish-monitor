@@ -14,7 +14,6 @@ class Tank(models.Model):
     ph_min = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
     ph_max = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
     last_ammonia = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
-    ammonia_min = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
     ammonia_max = models.DecimalField(max_digits=5, decimal_places=2, default = '0')
     light_value = models.IntegerField(null = True)
     updated = models.DateTimeField(auto_now=True)

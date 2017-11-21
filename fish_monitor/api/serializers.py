@@ -45,7 +45,6 @@ class TankSerializer(serializers.ModelSerializer):
             'ph_min',
             'ph_max',
             'last_ammonia',
-            'ammonia_min',
             'ammonia_max',
             'light_value',
             'updated',
