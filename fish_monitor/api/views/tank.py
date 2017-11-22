@@ -2,11 +2,12 @@ from django.http import Http404
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..models import Tank, WaterChangeHistory
-from ..serializers import TankSerializer, WaterChangeHistorySerializer
+from ..models import Tank, WaterChangeHistory, TempHistory
+from ..serializers import TankSerializer, WaterChangeHistorySerializer, TempHistorySerializer
 from ..permissions import IsAdminOrReadOnly
 from datetime import datetime, timedelta
 import json
+from django.utils import timezone
 
 class TankList(generics.ListCreateAPIView):
     queryset = Tank.objects.all()
@@ -22,7 +23,6 @@ class TankList(generics.ListCreateAPIView):
     def post(self, request, format=None):
         data = request.data
         data['owner'] = request.user.id
-        print(request.data)
         data['last_water_change'] = datetime.fromtimestamp(float(data['last_water_change']) / 1000.0)
         serializer = TankSerializer(data=data)
         if serializer.is_valid():
@@ -45,11 +45,15 @@ class TankDetail(APIView):
             raise Http404
 
     def get_water_changes(self, id):
-        cutoff = datetime.now() - timedelta(days = 14)
+        cutoff = timezone.now() - timedelta(days = 14)
         return WaterChangeHistory.objects.filter(tank=id).filter(modified_date__gte = cutoff)
 
-    def merge_details(self, tank, changes):
-        return { 'tank': tank, 'changes': changes }
+    def get_temp_history(self, id):
+        cutoff = timezone.now() - timedelta(days = 14)
+        return TempHistory.objects.filter(tank=id).filter(modified_date__gte = cutoff)
+
+    def merge_details(self, tank, changes, temps):
+        return { 'tank': tank, 'changes': changes, 'temps': temps }
 
     def get(self, request, pk, format=None):
         tank = self.get_object(pk)
@@ -59,7 +63,10 @@ class TankDetail(APIView):
             changes = self.get_water_changes(tank.id)
             changes_serializer = WaterChangeHistorySerializer(changes, many = True)
 
-            data = self.merge_details(serializer.data, changes_serializer.data)
+            temps = self.get_temp_history(tank.id)
+            temp_serializer = TempHistorySerializer(temps, many = True)
+
+            data = self.merge_details(serializer.data, changes_serializer.data, temp_serializer.data)
             return Response(data)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
